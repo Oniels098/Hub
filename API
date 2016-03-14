@@ -1,0 +1,20 @@
+    public void setTag(Player p, String prefix) throws Exception {
+        prefix = ChatColor.translateAlternateColorCodes('&', prefix);
+        if(prefix.length() > 16) {
+            prefix = prefix.substring(0, 16);
+        }
+        Scoreboard board = Bukkit.getScoreboardManager().getMainScoreboard();
+        Team t = board.getTeam(p.getName());
+        if(t == null) {
+            t = board.registerNewTeam(p.getName());
+            t.setPrefix(prefix);
+            t.addPlayer(p);
+        } else {
+            t = board.getTeam(p.getName());
+            t.setPrefix(prefix);
+            t.addPlayer(p);
+        }
+        for(Player o : Bukkit.getOnlinePlayers()) {
+            o.setScoreboard(board);
+        }
+    }
